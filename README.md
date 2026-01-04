@@ -58,3 +58,12 @@ This project is designed to run **locally** using Docker:
 
 ```bash
 docker compose up -d
+
+## Environment variables
+
+This project uses environment variables.
+
+Create a `.env` file based on `.env.example`:
+
+```bash
+cp .env.example .env
