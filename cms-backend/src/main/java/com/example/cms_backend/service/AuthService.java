@@ -9,6 +9,7 @@ import com.example.cms_backend.model.User;
 import com.example.cms_backend.repository.UserRepository;
 import com.example.cms_backend.exception.EmailAlreadyExistsException;
 import com.example.cms_backend.exception.InvalidCredentialsException;
+import com.example.cms_backend.security.JwtService;
 import org.springframework.stereotype.Service;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -18,10 +19,12 @@ public class AuthService{
     
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder){
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder, JwtService jwtService){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     public RegisterResponse register(RegisterRequest request){
@@ -51,9 +54,15 @@ public class AuthService{
         throw new InvalidCredentialsException();
     }
 
+    String token = jwtService.generateToken(
+        user.getId().toString(),
+        user.getEmail()
+    );
+
     return new LoginResponse(
         user.getId(),
-        user.getEmail()
+        user.getEmail(),
+        token
     );
 }
 

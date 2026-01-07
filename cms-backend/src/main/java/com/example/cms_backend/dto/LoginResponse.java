@@ -6,10 +6,12 @@ public class LoginResponse{
 
     private UUID id;
     private String email;
+    private String token;
 
-    public LoginResponse(UUID id, String email){
+    public LoginResponse(UUID id, String email, String token){
         this.id = id;
         this.email = email;
+        this.token = token;
     }
 
     public UUID getId(){
@@ -18,5 +20,9 @@ public class LoginResponse{
 
     public String getEmail(){
         return email;
+    }
+
+    public String getToken(){
+        return token;
     }
 }
