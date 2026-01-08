@@ -39,4 +39,17 @@ public class JwtService {
                 .parseClaimsJws(token)
                 .getBody();
     }
+
+    public String extractEmail(String token){
+        return parseToken(token).get("email", String.class);
+    }
+
+    public boolean isTokenValid(String token){
+        try{
+            parseToken(token);
+            return true;
+        }catch(Exception e){
+            return false;
+        }
+    }
 }
